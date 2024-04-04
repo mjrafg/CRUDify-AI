@@ -25,10 +25,10 @@ public class PluginConfigurableGUI {
         repositoryPackageField = new JTextField(40);
 
         setupTextFieldWithLabel(chatGptApiKeyField, "ChatGPT API Key:");
-        setupTextFieldWithLabel(entityPackageField, "Generic Entity Package Path:");
-        setupTextFieldWithLabel(controllerPackageField, "Generic Controller Package Path:");
-        setupTextFieldWithLabel(servicePackageField, "Generic Service Package Path:");
-        setupTextFieldWithLabel(repositoryPackageField, "Generic Repository Package Path:");
+        setupTextFieldWithLabel(entityPackageField, "Generic Entity Class Path:");
+        setupTextFieldWithLabel(controllerPackageField, "Generic Controller Class Path:");
+        setupTextFieldWithLabel(servicePackageField, "Generic Service Class Path:");
+        setupTextFieldWithLabel(repositoryPackageField, "Generic Repository Class Path:");
     }
 
     private void setupTextFieldWithLabel(JTextField textField, String labelText) {

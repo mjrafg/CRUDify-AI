@@ -7,6 +7,8 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.fileTypes.FileType;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.fileTypes.StdFileTypes;
 import com.intellij.openapi.progress.ProgressIndicator;
 import com.intellij.openapi.progress.ProgressManager;
@@ -57,25 +59,26 @@ public class CRUDifyAICreateBasePageAction extends AnAction {
                                 try {
                                     PsiDirectory directory = PsiManager.getInstance(project).findDirectory(selectedDir);
                                     if (directory != null) {
+                                        FileType javaFileType = FileTypeManager.getInstance().getFileTypeByExtension("java");
                                         PsiDirectory entityDirectory = directory.createSubdirectory(propertyPayload.getEntityName());
                                         Names names = Names.setInstance(propertyPayload.getEntityName());
                                         String entityClassContent = CodeGenerator.generateEntityClassCodes(entityName, propertyPayload);
-                                        PsiFile entityFile = PsiFileFactory.getInstance(project).createFileFromText(names.getEntityFileName(), StdFileTypes.JAVA, entityClassContent);
+                                        PsiFile entityFile = PsiFileFactory.getInstance(project).createFileFromText(names.getEntityFileName(), javaFileType, entityClassContent);
                                         CodeStyleManager.getInstance(project).reformat(entityFile);
                                         entityDirectory.add(entityFile);
 
                                         String controllerClassContent = CodeGenerator.generateControllerClassCodes();
-                                        PsiFile controllerFile = PsiFileFactory.getInstance(project).createFileFromText(names.getControllerFileName(), StdFileTypes.JAVA, controllerClassContent);
+                                        PsiFile controllerFile = PsiFileFactory.getInstance(project).createFileFromText(names.getControllerFileName(), javaFileType, controllerClassContent);
                                         CodeStyleManager.getInstance(project).reformat(controllerFile);
                                         entityDirectory.add(controllerFile);
 
                                         String serviceClassContent = CodeGenerator.generateServiceClassCodes();
-                                        PsiFile serviceFile = PsiFileFactory.getInstance(project).createFileFromText(names.getServiceFileName(), StdFileTypes.JAVA, serviceClassContent);
+                                        PsiFile serviceFile = PsiFileFactory.getInstance(project).createFileFromText(names.getServiceFileName(), javaFileType, serviceClassContent);
                                         CodeStyleManager.getInstance(project).reformat(serviceFile);
                                         entityDirectory.add(serviceFile);
 
                                         String repositoryClassContent = CodeGenerator.generateRepositoryClassCodes();
-                                        PsiFile repositoryFile = PsiFileFactory.getInstance(project).createFileFromText(names.getRepositoryFileName(), StdFileTypes.JAVA, repositoryClassContent);
+                                        PsiFile repositoryFile = PsiFileFactory.getInstance(project).createFileFromText(names.getRepositoryFileName(), javaFileType, repositoryClassContent);
                                         CodeStyleManager.getInstance(project).reformat(repositoryFile);
                                         entityDirectory.add(repositoryFile);
                                     }

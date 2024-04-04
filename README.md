@@ -36,4 +36,20 @@ With "CRUDify AI" installed and correctly configured, generating CRUD functional
 
 ## Contributing
 
-We warmly welcome contributions, whether they be bug fixes, enhancements, or new features. If you're interested in contributing, please fork the repository, create your feature branch, commit your changes, push to the branch, and open a pull request.
+We welcome contributions of all kinds from bug fixes to new features. Please follow these steps to contribute:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/AmazingFeature`).
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`).
+4. Push to the branch (`git push origin feature/AmazingFeature`).
+5. Open a pull request.
+
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## Contact
+
+MjrAfg - [mjrafg@yahoo.com](mjrafg@yahoo.com)
+
+Project Link: [https://github.com/mjrafg/CRUDify-AI](https://github.com/mjrafg/CRUDify-AI)
