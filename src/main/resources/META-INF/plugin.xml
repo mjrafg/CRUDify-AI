@@ -1,0 +1,75 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.mjr.lifeSaver</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>CRUDify AI</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="mjrafg@yahoo.com" >MjrAfg</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description>
+        <![CDATA[
+    <p>Elevate your Spring Boot application development with <strong>"CRUDify AI"</strong>, an innovative IntelliJ IDEA plugin designed to expedite the creation of CRUD functionalities. By leveraging the power of ChatGPT, "CRUDify AI" streamlines the process of coding foundational classes for database operations, enhancing developer productivity.</p>
+
+    <h3>Key Features:</h3>
+    <ul>
+        <li><strong>Automatic Class Generation</strong>: Effortlessly generate entity, controller, repository, and service classes using ChatGPT's sophisticated AI capabilities.</li>
+        <li><strong>Customizable CRUD Operations</strong>: Easily customize base page functionalities to meet the specific needs of your application.</li>
+        <li><strong>Multilingual Support</strong>: Submit your entity properties in any language. Our plugin intelligently translates them into English, generating corresponding annotations and properties to ensure accessibility.</li>
+        <li><strong>Seamless Integration</strong>: Right-click a directory, select "CRUDify AI Create Base Page", and input your entity name and properties in the dialog box. Your CRUD pages will integrate seamlessly into your project.</li>
+        <li><strong>Enhanced Productivity</strong>: Focus on your application's unique features while we handle the boilerplate code.</li>
+    </ul>
+
+    <h3>Getting Started:</h3>
+    <p>Before diving into the benefits of "CRUDify AI", it's essential to configure a few settings within your IntelliJ IDEA to ensure a smooth operation:</p>
+    <ol>
+        <li><strong>ChatGPT API Key</strong>: Navigate to the plugin settings and enter your ChatGPT API key. This key is vital for enabling AI-driven code generation.</li>
+        <li><strong>Package Paths Configuration</strong>: Specify the generic package paths for entities, controllers, services, and repositories. Your generated CRUD classes will extend these generic classes, ensuring consistency and reducing manual configuration.</li>
+    </ol>
+    <p>After these initial configurations:</p>
+    <ol start="3">
+        <li>Right-click the directory where you want to create the base page.</li>
+        <li>Choose "CRUDify AI Create Base Page" from the context menu and fill in the entity name and properties in the dialog window.</li>
+        <li>Let "CRUDify AI" generate the necessary classes with all required annotations, ready for CRUD operations.</li>
+    </ol>
+
+    <p><strong>Multilingual Entity Creation</strong>: A standout feature of "CRUDify AI" is its ability to accept entity names and properties in any language, which the AI then translates to English. This ensures that developers around the globe can use the plugin effortlessly, making your development process as inclusive as it is efficient.</p>
+
+    <h3>Setting Up Your ChatGPT API Key:</h3>
+    <p>To unlock the full potential of "CRUDify AI," configure your ChatGPT API key within the plugin's settings. This step is crucial for enabling the plugin to generate comprehensive CRUD functionalities through AI.</p>
+    <ul>
+        <li>Obtain your ChatGPT API key by signing up or logging into your OpenAI account and navigating to the API section.</li>
+        <li>In IntelliJ IDEA, access the plugin settings by going to <code>File &gt; Settings</code> (Windows/Linux) or <code>IntelliJ IDEA &gt; Preferences</code> (macOS), and locate the "CRUDify AI" settings.</li>
+        <li>Enter your ChatGPT API key and the generic package paths as outlined above.</li>
+    </ul>
+    <p>With these settings configured, you're all set to generate entities, controllers, repositories, and services with just a few clicks. "CRUDify AI" not only boosts productivity but also ensures your projects benefit from the latest advancements in AI technology, making it an indispensable tool for developers looking to enhance their Spring Boot application development workflow.</p>
+    ]]>
+    </description>
+
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+        <projectConfigurable id="PluginConfigurable" displayName="CRUDify AI"
+                             instance="config.PluginConfigurable"/>
+        <applicationService serviceImplementation="config.PluginSettings"/>
+    </extensions>
+
+    <actions>
+        <action id="CRUDifyAICreateBasePageAction" class="app.CRUDifyAICreateBasePageAction" text="CRUDify AI Create Base Page"
+                description="CRUDify AI create base page">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="first"/>
+        </action>
+    </actions>
+
+</idea-plugin>
