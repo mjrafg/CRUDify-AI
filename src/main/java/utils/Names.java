@@ -6,6 +6,7 @@ import lombok.Data;
 public class Names {
     private static Names namesObj = new Names();
     private String name;
+    private String nameCamelCase;
     private String entityName;
     private String entityNameCamelCase;
     private String entityFileName;
@@ -20,6 +21,7 @@ public class Names {
     private String repositoryFileName;
     public static Names setInstance(String name){
         namesObj.setName(name);
+        namesObj.setNameCamelCase(Converters.toCamelCase(name));
         namesObj.setEntityName(name+"Entity");
         namesObj.setEntityNameCamelCase(Converters.toCamelCase(namesObj.getEntityName()));
         namesObj.setEntityFileName(name+"Entity.java");
