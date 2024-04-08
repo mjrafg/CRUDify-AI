@@ -46,6 +46,7 @@ public class Prompt {
                 "`    \"annotations\": {\\n`+\n" +
                 "`      \"includeValidation\": true,\\n`+\n" +
                 "`      \"includeJPA\": true\\n`+\n" +
+                "`      \"imports\": \"use jakarta.persistence for jpa annotations\"\\n`+\n" +
                 "`    }\\n`+\n" +
                 "`  }\\n`+\n" +
                 "`}\\n`";
