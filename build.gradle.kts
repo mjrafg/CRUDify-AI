@@ -68,4 +68,8 @@ tasks {
     publishPlugin {
         token.set(System.getenv("PUBLISH_TOKEN"))
     }
+
+    withType<ProcessResources> {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
 }
