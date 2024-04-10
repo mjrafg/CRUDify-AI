@@ -40,7 +40,9 @@ public class BasePageCreationDialog extends DialogWrapper {
         southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS)); // Changed to BoxLayout
 
         JPanel descriptionPanel = new JPanel(new BorderLayout());
-        descriptionPanel.add(new JLabel("Properties"), BorderLayout.NORTH);
+        JLabel propertiesLabel = new JLabel("Properties(one per line)");
+        propertiesLabel.setToolTipText("Enter each property on a separate line.");
+        descriptionPanel.add(propertiesLabel, BorderLayout.NORTH);
         descriptionPanel.add(new JScrollPane(propertiesAreaField), BorderLayout.CENTER);
 
 //        JPanel usagePanel = new JPanel(new BorderLayout());
