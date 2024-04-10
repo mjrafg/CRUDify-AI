@@ -50,8 +50,9 @@ public class CRUDifyAICreateBasePageAction extends AnAction {
                     progressIndicator.setIndeterminate(true);
 
                     Thread gptAskThread = new Thread(() -> {
+                        String result = "";
                         try {
-                            String result = ChatGptTurbo.help(prompt);
+                            result = ChatGptTurbo.help(prompt);
                             result = Arrays.stream(result.split("\n")).filter(p -> !p.contains("`")).collect(Collectors.joining("\n"));
                             PropertyPayload propertyPayload = Converters.fromJson(result, new TypeReference<>() {
                             });
@@ -59,9 +60,9 @@ public class CRUDifyAICreateBasePageAction extends AnAction {
                                 try {
                                     PsiDirectory directory = PsiManager.getInstance(project).findDirectory(selectedDir);
                                     if (directory != null) {
-                                        FileType javaFileType = FileTypeManager.getInstance().getFileTypeByExtension("java");
-                                        PsiDirectory entityDirectory = directory.createSubdirectory(propertyPayload.getEntityName());
                                         Names names = Names.setInstance(propertyPayload.getEntityName());
+                                        FileType javaFileType = FileTypeManager.getInstance().getFileTypeByExtension("java");
+                                        PsiDirectory entityDirectory = directory.createSubdirectory(names.getNameCamelCase());
                                         String entityClassContent = CodeGenerator.generateEntityClassCodes(entityName, propertyPayload);
                                         PsiFile entityFile = PsiFileFactory.getInstance(project).createFileFromText(names.getEntityFileName(), javaFileType, entityClassContent);
                                         CodeStyleManager.getInstance(project).reformat(entityFile);
