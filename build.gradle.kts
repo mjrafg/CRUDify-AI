@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "com.mjr"
-version = "0.0.1"
+version = "0.0.2"
 
 repositories {
     mavenCentral()
@@ -55,8 +55,8 @@ tasks {
     }
 
     patchPluginXml {
-        sinceBuild.set("222")
-        untilBuild.set("232.*")
+        sinceBuild.set("144")
+        untilBuild.set("244.*")
     }
 
     signPlugin {
