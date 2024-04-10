@@ -4,12 +4,19 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public class Prompt {
-    public static String getPropertiesPrompt(String entityName,String propertiesStr){
+    private static String formatProperties(String propertiesStr) {
+        return Arrays.stream(propertiesStr.split("\n"))
+                .filter(property -> !property.trim().isEmpty())
+                .map(property -> "`   \"" + property + "\",\\n`+\n")
+                .collect(Collectors.joining());
+    }
+
+    public static String getPropertiesPrompt(String entityName, String propertiesStr) {
         return "{\n" +
                 "`  \"task\": \"generate-spring-boot-entity-properties\",\\n`+\n" +
                 "`  \"entityName\": \"" + entityName + "\",\\n`+\n" +
                 "`  \"properties\": [\\n`+\n" +
-                Arrays.stream(propertiesStr.split("\n")).toList().stream().filter(property -> !property.equals("")).map(property -> "`   \"" + property + "\",\\n`+\n").collect(Collectors.joining("")) +
+                formatProperties(propertiesStr) +
                 "`  ],\\n`+\n" +
                 "  \"requirements\": {\n" +
                 "    \"translate\": \"EN\",\n" +

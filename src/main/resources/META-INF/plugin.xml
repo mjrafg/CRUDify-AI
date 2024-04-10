@@ -72,4 +72,18 @@
         </action>
     </actions>
 
+    <change-notes>
+        <![CDATA[
+<h2>What's New in 0.0.2</h2>
+<ul>
+    <li><strong>Compatibility Improvements:</strong>
+        <ul>
+            <li>Resolved Binary Incompatibility Issues: Fixed issues related to the use of Application.getService(Class) which was not available in IntelliJ IDEA versions prior to 2019.2. The plugin now uses ServiceManager.getService(Class) for versions earlier than 2019.2, ensuring compatibility from 2018.1 to 2023.</li>
+            <li>Java Method Compatibility: Replaced the Stream.toList() method with Collectors.toList() to ensure compatibility with Java 8 and newer, addressing the NoSuchMethodError in older Java environments.</li>
+        </ul>
+    </li>
+</ul>
+]]>
+    </change-notes>
+
 </idea-plugin>

@@ -1,7 +1,9 @@
 package config;
 
+import com.intellij.openapi.application.ApplicationInfo;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
@@ -34,7 +36,15 @@ public class PluginSettings implements PersistentStateComponent<PluginSettings> 
     }
 
     public static PluginSettings getInstance() {
-        PluginSettings pluginSettings = ApplicationManager.getApplication().getService(PluginSettings.class);
-        return pluginSettings;
+        if (isVersion2019_2OrNewer()) {
+            return ApplicationManager.getApplication().getService(PluginSettings.class);
+        } else {
+            return ServiceManager.getService(PluginSettings.class);
+        }
+    }
+
+    private static boolean isVersion2019_2OrNewer() {
+        String ideVersion = ApplicationInfo.getInstance().getBuild().asString();
+        return ideVersion.compareTo("192") >= 0; // "192" is the build number for 2019.2
     }
 }
