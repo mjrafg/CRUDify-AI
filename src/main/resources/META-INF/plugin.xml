@@ -74,6 +74,11 @@
 
     <change-notes>
         <![CDATA[
+        <h2>What's New in 0.0.3</h2>
+<ul>
+    <li><strong>ٍExtract the base classes from the user-specified packages.</strong>
+    </li>
+</ul>
 <h2>What's New in 0.0.2</h2>
 <ul>
     <li><strong>Compatibility Improvements:</strong>

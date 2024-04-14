@@ -9,13 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static utils.CommonUtils.getLastWordFromQualifiedName;
+
 public class CodeGenerator {
 
     public static String generateEntityClassCodes(String entityName, PropertyPayload propertyPayload){
         PluginSettings pluginSettings = PluginSettings.getInstance();
+        String entityPackage = pluginSettings.getEntityPackageField();
         Names names = Names.getInstance();
         String content =
-                "import "+pluginSettings.getEntityPackageField()+";\n" +
+                "import "+entityPackage+";\n" +
                         propertyPayload.getImports().stream().map(imp->"import "+imp.getImportProp()+";\n").collect(Collectors.joining(""))+
                         "import jdk.jfr.Description;\n" +
                         "import lombok.AllArgsConstructor;\n" +
@@ -29,7 +32,7 @@ public class CodeGenerator {
                         "@AllArgsConstructor\n" +
                         "@NoArgsConstructor\n" +
                         "@Description(\""+entityName+"\")\n" +
-                        "public class "+names.getEntityName()+" extends BaseEntity {\n" +
+                        "public class "+names.getEntityName()+" extends "+getLastWordFromQualifiedName(entityPackage)+" {\n" +
                         propertyPayload.getProperties().stream().map(CodeGenerator::getPropertyStr).collect(Collectors.joining("\n"))+
                         "}";
         return content;
@@ -61,8 +64,9 @@ public class CodeGenerator {
     }
     public static String generateControllerClassCodes(){
         PluginSettings pluginSettings = PluginSettings.getInstance();
+        String controllerPackage = pluginSettings.getControllerPackageField();
         Names names = Names.getInstance();
-        String content = "import "+pluginSettings.getControllerPackageField()+";\n" +
+        String content = "import "+controllerPackage+";\n" +
                 "import org.springframework.beans.factory.annotation.Autowired;\n" +
                 "import org.springframework.http.ResponseEntity;\n" +
                 "import org.springframework.web.bind.annotation.GetMapping;\n" +
@@ -72,7 +76,7 @@ public class CodeGenerator {
                 "\n" +
                 "@RestController\n" +
                 "@RequestMapping(\"/api/"+Pluralizer.pluralize(names.getName()).toLowerCase()+"\")\n" +
-                "public class "+names.getControllerName()+" extends GenericController<"+names.getEntityName()+", String> {\n" +
+                "public class "+names.getControllerName()+" extends "+getLastWordFromQualifiedName(controllerPackage)+"<"+names.getEntityName()+", String> {\n" +
                 "    "+names.getServiceName()+" "+names.getServiceNameCamelCase()+";\n" +
                 "\n" +
                 "    @Autowired\n" +
@@ -88,13 +92,14 @@ public class CodeGenerator {
     }
     public static String generateServiceClassCodes(){
         PluginSettings pluginSettings = PluginSettings.getInstance();
+        String servicePackage = pluginSettings.getServicePackageField();
         Names names = Names.getInstance();
-        String content = "import "+pluginSettings.getServicePackageField()+";\n" +
+        String content = "import "+servicePackage+";\n" +
                 "import org.springframework.beans.factory.annotation.Autowired;\n" +
                 "import org.springframework.stereotype.Service;\n" +
                 "\n" +
                 "@Service\n" +
-                "public class "+names.getServiceName()+" extends GenericServiceImpl<"+names.getEntityName()+",String> {\n" +
+                "public class "+names.getServiceName()+" extends "+getLastWordFromQualifiedName(servicePackage)+"<"+names.getEntityName()+",String> {\n" +
                 "    "+names.getRepositoryName()+" "+names.getRepositoryNameCamelCase()+";\n" +
                 "\n" +
                 "    @Autowired\n" +
@@ -108,10 +113,11 @@ public class CodeGenerator {
     }
     public static String generateRepositoryClassCodes(){
         PluginSettings pluginSettings = PluginSettings.getInstance();
+        String repositoryPackage = pluginSettings.getRepositoryPackageField();
         Names names = Names.getInstance();
-        String content = "import "+pluginSettings.getRepositoryPackageField()+";\n" +
+        String content = "import "+repositoryPackage+";\n" +
                 "\n" +
-                "public interface "+names.getRepositoryName()+"  extends GenericRepository<"+names.getEntityName()+", String> {\n" +
+                "public interface "+names.getRepositoryName()+"  extends "+getLastWordFromQualifiedName(repositoryPackage)+"<"+names.getEntityName()+", String> {\n" +
                 "}\n";
         return content;
     }
