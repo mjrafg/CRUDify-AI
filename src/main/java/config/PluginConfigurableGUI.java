@@ -15,8 +15,8 @@ public class PluginConfigurableGUI {
     private JTextField repositoryPackageField;
 
     public PluginConfigurableGUI() {
-        mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel = new JPanel(null);
+//        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         chatGptApiKeyField = new JTextField(40);
         entityPackageField = new JTextField(40);
@@ -24,14 +24,27 @@ public class PluginConfigurableGUI {
         servicePackageField = new JTextField(40);
         repositoryPackageField = new JTextField(40);
 
-        setupTextFieldWithLabel(chatGptApiKeyField, "ChatGPT API Key:");
-        setupTextFieldWithLabel(entityPackageField, "Generic Entity Class Path:");
-        setupTextFieldWithLabel(controllerPackageField, "Generic Controller Class Path:");
-        setupTextFieldWithLabel(servicePackageField, "Generic Service Class Path:");
-        setupTextFieldWithLabel(repositoryPackageField, "Generic Repository Class Path:");
+        setupTextFieldWithLabel(chatGptApiKeyField, "ChatGPT API Key:",0);
+        setupTextFieldWithLabel(entityPackageField, "Generic Entity Class Path:",1);
+        setupTextFieldWithLabel(controllerPackageField, "Generic Controller Class Path:",2);
+        setupTextFieldWithLabel(servicePackageField, "Generic Service Class Path:",3);
+        setupTextFieldWithLabel(repositoryPackageField, "Generic Repository Class Path:",4);
     }
+    public void addGroupBox(String title, Component... components) {
+        JPanel borderPanel = new JPanel();
+        borderPanel.setLayout(new BoxLayout(borderPanel, BoxLayout.Y_AXIS));
+        borderPanel.setBorder(BorderFactory.createTitledBorder(title));
 
-    private void setupTextFieldWithLabel(JTextField textField, String labelText) {
+        JPanel innerPanel = new JPanel();
+        innerPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        for (Component component : components) {
+            innerPanel.add(component);
+        }
+
+        borderPanel.add(innerPanel);
+        mainPanel.add(borderPanel);
+    }
+    private JPanel setupTextFieldWithLabel(JTextField textField, String labelText,int index) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -55,8 +68,8 @@ public class PluginConfigurableGUI {
 
         fieldPanel.add(new JLabel(labelText), gbc); // Add label with constraints
         fieldPanel.add(textField, gbc); // Add text field with the same constraints
-
-        mainPanel.add(fieldPanel);
+        fieldPanel.setBounds(10,index*60,400,50);
+        return fieldPanel;
     }
 
 
