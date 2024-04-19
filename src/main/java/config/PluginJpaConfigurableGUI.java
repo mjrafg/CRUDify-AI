@@ -1,12 +1,16 @@
 package config;
 
+import com.intellij.openapi.ui.ComboBox;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 
-public class PluginConfigurableGUI {
+public class PluginJpaConfigurableGUI {
     private JPanel mainPanel;
     private JTextField chatGptApiKeyField;
     private JTextField entityPackageField;
@@ -14,9 +18,8 @@ public class PluginConfigurableGUI {
     private JTextField servicePackageField;
     private JTextField repositoryPackageField;
 
-    public PluginConfigurableGUI() {
+    public PluginJpaConfigurableGUI() {
         mainPanel = new JPanel(null);
-//        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         chatGptApiKeyField = new JTextField(40);
         entityPackageField = new JTextField(40);
@@ -24,14 +27,19 @@ public class PluginConfigurableGUI {
         servicePackageField = new JTextField(40);
         repositoryPackageField = new JTextField(40);
 
-        setupTextFieldWithLabel(chatGptApiKeyField, "ChatGPT API Key:",0);
-        setupTextFieldWithLabel(entityPackageField, "Generic Entity Class Path:",1);
-        setupTextFieldWithLabel(controllerPackageField, "Generic Controller Class Path:",2);
-        setupTextFieldWithLabel(servicePackageField, "Generic Service Class Path:",3);
-        setupTextFieldWithLabel(repositoryPackageField, "Generic Repository Class Path:",4);
+        JPanel chatGptPanel = setupTextFieldWithLabel(chatGptApiKeyField, "ChatGPT API Key:");
+        JPanel entityPanel = setupTextFieldWithLabel(entityPackageField, "Generic Entity Class Path:");
+        JPanel controllerPanel = setupTextFieldWithLabel(controllerPackageField, "Generic Controller Class Path:");
+        JPanel servicePanel = setupTextFieldWithLabel(servicePackageField, "Generic Service Class Path:");
+        JPanel repositoryPanel = setupTextFieldWithLabel(repositoryPackageField, "Generic Repository Class Path:");
+        JPanel jpaPanel =  addGroupBox("Base JPA page", 10, 0, 500, 320, chatGptPanel, entityPanel, controllerPanel, servicePanel, repositoryPanel);
+
+
+        mainPanel.add(jpaPanel);
     }
-    public void addGroupBox(String title, Component... components) {
-        JPanel borderPanel = new JPanel();
+
+    public JPanel addGroupBox(String title, int x, int y, int width, int height, Component... components) {
+        JPanel borderPanel = new JPanel(null);
         borderPanel.setLayout(new BoxLayout(borderPanel, BoxLayout.Y_AXIS));
         borderPanel.setBorder(BorderFactory.createTitledBorder(title));
 
@@ -42,36 +50,60 @@ public class PluginConfigurableGUI {
         }
 
         borderPanel.add(innerPanel);
-        mainPanel.add(borderPanel);
+        borderPanel.setBounds(x, y, width, height);
+        return borderPanel;
     }
-    private JPanel setupTextFieldWithLabel(JTextField textField, String labelText,int index) {
+
+    private JPanel setupTextFieldWithLabel(JTextField textField, String labelText) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.weightx = 1;
-        gbc.insets = new Insets(2, 0, 2, 0); // Top and bottom padding to reduce space between fields
+        gbc.insets = new Insets(2, 0, 2, 0);
         textField.getDocument().addDocumentListener(new DocumentListener() {
             public void changedUpdate(DocumentEvent e) {
                 changed();
             }
+
             public void removeUpdate(DocumentEvent e) {
                 changed();
             }
+
             public void insertUpdate(DocumentEvent e) {
                 changed();
             }
+
             private void changed() {
-                // This can mark the settings as modified, enabling the "Apply" button
+
             }
         });
         JPanel fieldPanel = new JPanel(new GridBagLayout());
 
-        fieldPanel.add(new JLabel(labelText), gbc); // Add label with constraints
-        fieldPanel.add(textField, gbc); // Add text field with the same constraints
-        fieldPanel.setBounds(10,index*60,400,50);
+        fieldPanel.add(new JLabel(labelText), gbc);
+        fieldPanel.add(textField, gbc);
         return fieldPanel;
     }
+    private JPanel setupComboBoxWithLabel(ComboBox comboField, String labelText) {
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridwidth = GridBagConstraints.REMAINDER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1;
+        gbc.insets = new Insets(2, 0, 2, 0);
+        comboField.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                changed();
+            }
+            private void changed() {
 
+            }
+        });
+        JPanel fieldPanel = new JPanel(new GridBagLayout());
+
+        fieldPanel.add(new JLabel(labelText), gbc);
+        fieldPanel.add(comboField, gbc);
+        return fieldPanel;
+    }
 
     public JPanel getMainPanel() {
         return mainPanel;
@@ -116,4 +148,6 @@ public class PluginConfigurableGUI {
     public void setRepositoryPackageField(String value) {
         repositoryPackageField.setText(value);
     }
+
+
 }

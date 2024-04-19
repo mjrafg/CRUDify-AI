@@ -20,10 +20,16 @@ import lombok.Setter;
 )
 public class PluginSettings implements PersistentStateComponent<PluginSettings> {
     private String chatGptApiKey = "";
-    private String entityPackageField="";
-    private String controllerPackageField="";
-    private String servicePackageField="";
-    private String repositoryPackageField="";
+    private String entityPackageField = "";
+    private String controllerPackageField = "";
+    private String servicePackageField = "";
+    private String repositoryPackageField = "";
+    private String databaseTypeField = "";
+    private String databaseHostField = "";
+    private String databasePortField = "";
+    private String databaseUserNameField = "";
+    private String databasePasswordField = "";
+
     @Nullable
     @Override
     public PluginSettings getState() {

@@ -60,8 +60,9 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <projectConfigurable id="PluginConfigurable" displayName="CRUDify AI"
-                             instance="config.PluginConfigurable"/>
+        <projectConfigurable parentId="root" id="CrudifyAI" instance="config.CrudifyAISettingsConfigurable" displayName="Crudify AI" />
+        <projectConfigurable parentId="CrudifyAI" instance="config.PluginJpaConfigurable" displayName="JPA" />
+        <projectConfigurable parentId="CrudifyAI" instance="config.PluginDatabaseConfigurable" displayName="Database" />
         <applicationService serviceImplementation="config.PluginSettings"/>
     </extensions>
 
