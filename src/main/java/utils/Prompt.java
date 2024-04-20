@@ -62,6 +62,7 @@ public class Prompt {
                 "      \"includeValidation\": true,\n" +
                 "      \"includeJPA\": true,\n" +
                 "      \"imports\": \"use jakarta.persistence for jpa annotations\"\n" +
+                "      \"swagger\": \"add Schema annotation for each entity fill description and example in detected properties language\"\n" +
                 "    }\n" +
                 "  }\n" +
                 "}\n";

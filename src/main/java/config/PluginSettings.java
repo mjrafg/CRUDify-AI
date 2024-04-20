@@ -29,7 +29,7 @@ public class PluginSettings implements PersistentStateComponent<PluginSettings> 
     private String databasePortField = "";
     private String databaseUserNameField = "";
     private String databasePasswordField = "";
-
+    private boolean usingSwagger = false;
     @Nullable
     @Override
     public PluginSettings getState() {
